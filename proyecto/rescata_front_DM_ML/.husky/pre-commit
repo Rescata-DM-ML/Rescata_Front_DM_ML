@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+cd proyecto/rescata_front_DM_ML
+npm run lint
