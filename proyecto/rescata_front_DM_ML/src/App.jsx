@@ -1,10 +1,17 @@
-import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
+import Login from './pages/Login';
+import AuthGuard from './core/guards/AuthGuard';
 import { useAuthStore } from './features/auth/stores/auth.store';
 import './App.css';
 
-function Home() {
-  const { user, isAuth, clearUser } = useAuthStore();
+function RootRedirect() {
+  const isAuth = useAuthStore((state) => state.isAuth);
+  return <Navigate to={isAuth ? '/explore' : '/login'} replace />;
+}
+
+function Explore() {
+  const { user, clearUser } = useAuthStore();
 
   return (
     <div className="home-container">
@@ -25,51 +32,34 @@ function Home() {
           <span className="brand-name font-large">RESCATA</span>
         </div>
 
-        {isAuth && user ? (
-          <div className="auth-profile-section">
-            <h1 className="welcome-title">¡Bienvenido, {user.nombre}!</h1>
-            <p className="welcome-subtitle">Tu cuenta de consumidor ha sido activada con éxito.</p>
-            
-            <div className="profile-details-card">
-              <h3>Datos del Consumidor</h3>
-              <div className="detail-item">
-                <span className="detail-label">ID de Usuario:</span>
-                <span className="detail-value mono-text">{user.id}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Nombre:</span>
-                <span className="detail-value">{user.nombre}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Correo:</span>
-                <span className="detail-value">{user.correo}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Rol:</span>
-                <span className="detail-value badge">{user.rol}</span>
-              </div>
+        <div className="auth-profile-section">
+          <h1 className="welcome-title">¡Bienvenido, {user?.nombre || 'Usuario'}!</h1>
+          <p className="welcome-subtitle">Tu cuenta de consumidor está activa y has iniciado sesión.</p>
+          
+          <div className="profile-details-card">
+            <h3>Datos de tu Sesión</h3>
+            <div className="detail-item">
+              <span className="detail-label">ID de Usuario:</span>
+              <span className="detail-value mono-text">{user?.id || 'N/A'}</span>
             </div>
+            <div className="detail-item">
+              <span className="detail-label">Nombre:</span>
+              <span className="detail-value">{user?.nombre || 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Correo:</span>
+              <span className="detail-value">{user?.correo || 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Rol:</span>
+              <span className="detail-value badge">{user?.rol || 'consumidor'}</span>
+            </div>
+          </div>
 
-            <button onClick={clearUser} className="logout-btn">
-              Cerrar Sesión
-            </button>
-          </div>
-        ) : (
-          <div className="landing-section">
-            <h1>Salva Comida. Ayuda al Planeta.</h1>
-            <p className="landing-subtitle">
-              Rescata excedentes de comida de tus negocios favoritos a precios increíbles.
-            </p>
-            <div className="action-buttons">
-              <Link to="/register" className="btn-primary">
-                Crear Cuenta de Consumidor
-              </Link>
-              <Link to="/login" className="btn-secondary">
-                Iniciar Sesión
-              </Link>
-            </div>
-          </div>
-        )}
+          <button onClick={clearUser} className="logout-btn">
+            Cerrar Sesión
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -79,8 +69,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
+        {/* Rutas Protegidas */}
+        <Route element={<AuthGuard />}>
+          <Route path="/explore" element={<Explore />} />
+        </Route>
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
