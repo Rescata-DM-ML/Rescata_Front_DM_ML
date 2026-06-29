@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import AvisoPrivacidad from './pages/AvisoPrivacidad';
 import AuthGuard from './core/guards/AuthGuard';
 import { useAuthStore } from './features/auth/stores/auth.store';
 import './App.css';
@@ -72,6 +73,7 @@ function App() {
         <Route path="/" element={<RootRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/aviso-privacidad" element={<AvisoPrivacidad />} />
         
         {/* Rutas Protegidas */}
         <Route element={<AuthGuard />}>
