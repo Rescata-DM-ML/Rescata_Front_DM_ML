@@ -33,6 +33,9 @@ const registerSchema = z
         { message: 'La contraseña no cumple los requisitos' }
       ),
     confirmacionContrasena: z.string(),
+    consentimientoPrivacidad: z.literal(true, {
+      errorMap: () => ({ message: 'Debes aceptar el aviso de privacidad' }),
+    }),
   })
   .refine((data) => data.contrasena === data.confirmacionContrasena, {
     message: 'Las contraseñas no coinciden',
@@ -200,6 +203,35 @@ export default function Register() {
             register={register}
             disabled={isLoading}
           />
+
+          <div className="register-consent-container">
+            <label className="register-consent-label">
+              <input
+                type="checkbox"
+                id="consentimientoPrivacidad"
+                {...register('consentimientoPrivacidad')}
+                disabled={isLoading}
+                defaultChecked={false}
+                className="register-consent-checkbox"
+              />
+              <span className="register-consent-text">
+                He leído y acepto el{' '}
+                <a
+                  href="/aviso-privacidad"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="privacy-link"
+                >
+                  Aviso de Privacidad
+                </a>
+              </span>
+            </label>
+            {errors.consentimientoPrivacidad && (
+              <span className="register-consent-error-message">
+                {errors.consentimientoPrivacidad.message}
+              </span>
+            )}
+          </div>
 
           <button
             type="submit"
