@@ -17,7 +17,7 @@ export default function useAuthMutation() {
         correo: formData.correo,
         contrasena: formData.contrasena,
         confirmacionContrasena: formData.confirmacionContrasena,
-        consentimientoPrivacidad: true,
+        consentimientoPrivacidad: formData.consentimientoPrivacidad,
       });
 
       const data = response.data || {};
