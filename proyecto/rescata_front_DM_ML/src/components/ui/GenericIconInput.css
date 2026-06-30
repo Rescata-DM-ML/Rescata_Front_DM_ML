@@ -47,13 +47,13 @@
 }
 
 .generic-input-field:focus {
-  border-color: #16A34A; /* primary color green-600 */
+  border-color: #16a34a; /* primary color green-600 */
   box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
 }
 
 /* Invalid state */
 .generic-input-field.is-invalid {
-  border-color: #DC2626; /* red-600 */
+  border-color: #dc2626; /* red-600 */
 }
 .generic-input-field.is-invalid:focus {
   box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
@@ -61,7 +61,7 @@
 
 /* Valid state */
 .generic-input-field.is-valid {
-  border-color: #16A34A; /* green-600 */
+  border-color: #16a34a; /* green-600 */
 }
 .generic-input-field.is-valid:focus {
   box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
@@ -80,11 +80,11 @@
 }
 
 .generic-input-field:focus ~ .generic-input-left-icon {
-  color: #16A34A;
+  color: #16a34a;
 }
 
 .generic-input-field.is-invalid ~ .generic-input-left-icon {
-  color: #DC2626;
+  color: #dc2626;
 }
 
 /* Right validation icons */
@@ -99,11 +99,11 @@
 }
 
 .generic-input-right-icon.error-icon {
-  color: #DC2626;
+  color: #dc2626;
 }
 
 .generic-input-right-icon.success-icon {
-  color: #16A34A;
+  color: #16a34a;
 }
 
 /* Error message area */
@@ -117,7 +117,7 @@
 
 .generic-input-error-message {
   font-size: 0.75rem;
-  color: #DC2626;
+  color: #dc2626;
   font-weight: 500;
   opacity: 0;
   transform: translateY(-5px);
@@ -157,7 +157,7 @@
 }
 
 .generic-input-right-action-btn:hover {
-  color: #16A34A; /* primary green-600 */
+  color: #16a34a; /* primary green-600 */
 }
 
 /* Shift validation icons to the left if there's a password toggle button */

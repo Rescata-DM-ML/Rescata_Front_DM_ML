@@ -4,9 +4,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 100% 0%, rgba(22, 163, 74, 0.05) 0%, transparent 50%),
-              radial-gradient(circle at 0% 100%, rgba(22, 163, 74, 0.03) 0%, transparent 50%),
-              #fafafa;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(22, 163, 74, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(22, 163, 74, 0.03) 0%, transparent 50%), #fafafa;
   font-family: 'Outfit', sans-serif;
   box-sizing: border-box;
   padding: 3rem 1.5rem;
@@ -18,17 +18,21 @@
   background: #ffffff;
   border-radius: 24px;
   border: 1px solid rgba(229, 228, 231, 0.7);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 
-              0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.05),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02);
   padding: 3rem;
   box-sizing: border-box;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .home-card:hover {
-  box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.08), 
-              0 15px 15px -5px rgba(0, 0, 0, 0.03);
+  box-shadow:
+    0 25px 30px -5px rgba(0, 0, 0, 0.08),
+    0 15px 15px -5px rgba(0, 0, 0, 0.03);
 }
 
 .logo-container.centered {
@@ -47,7 +51,7 @@
 .brand-name.font-large {
   font-size: 1.75rem;
   font-weight: 800;
-  color: #16A34A;
+  color: #16a34a;
   letter-spacing: 1.5px;
 }
 
@@ -99,7 +103,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: #16A34A;
+  background-color: #16a34a;
   border-radius: 10px;
   text-decoration: none;
   display: inline-block;
@@ -119,9 +123,9 @@
   padding: 0.875rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #16A34A;
+  color: #16a34a;
   background-color: transparent;
-  border: 2px solid #16A34A;
+  border: 2px solid #16a34a;
   border-radius: 10px;
   text-decoration: none;
   display: inline-block;
@@ -181,7 +185,7 @@
 
 .detail-value.badge {
   background: rgba(22, 163, 74, 0.1);
-  color: #16A34A;
+  color: #16a34a;
   padding: 0.25rem 0.6rem;
   border-radius: 99px;
   font-size: 0.8rem;

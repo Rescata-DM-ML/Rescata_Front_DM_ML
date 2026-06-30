@@ -6,9 +6,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 0% 0%, rgba(22, 163, 74, 0.05) 0%, transparent 50%),
-              radial-gradient(circle at 100% 100%, rgba(22, 163, 74, 0.03) 0%, transparent 50%),
-              #fafafa;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(22, 163, 74, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(22, 163, 74, 0.03) 0%, transparent 50%), #fafafa;
   font-family: 'Outfit', sans-serif;
   box-sizing: border-box;
   padding: 2rem 1rem;
@@ -20,18 +20,22 @@
   background: #ffffff;
   border-radius: 20px;
   border: 1px solid rgba(229, 228, 231, 0.7);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 
-              0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.05),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02);
   padding: 2.5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .register-card:hover {
-  box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.08), 
-              0 15px 15px -5px rgba(0, 0, 0, 0.03);
+  box-shadow:
+    0 25px 30px -5px rgba(0, 0, 0, 0.08),
+    0 15px 15px -5px rgba(0, 0, 0, 0.03);
 }
 
 .register-header {
@@ -52,7 +56,7 @@
 .brand-name {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #16A34A; /* Emerald green */
+  color: #16a34a; /* Emerald green */
   letter-spacing: 1px;
 }
 
@@ -85,7 +89,7 @@
   font-weight: 600;
   font-family: 'Outfit', sans-serif;
   color: #ffffff;
-  background-color: #16A34A; /* primary color */
+  background-color: #16a34a; /* primary color */
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -93,16 +97,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.2), 
-              0 2px 4px -1px rgba(22, 163, 74, 0.1);
+  box-shadow:
+    0 4px 6px -1px rgba(22, 163, 74, 0.2),
+    0 2px 4px -1px rgba(22, 163, 74, 0.1);
   margin-top: 1rem;
 }
 
 .register-submit-btn:hover:not(:disabled) {
   background-color: #15803d; /* green-700 */
   transform: translateY(-1px);
-  box-shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.3), 
-              0 4px 6px -2px rgba(22, 163, 74, 0.15);
+  box-shadow:
+    0 10px 15px -3px rgba(22, 163, 74, 0.3),
+    0 4px 6px -2px rgba(22, 163, 74, 0.15);
 }
 
 .register-submit-btn:active:not(:disabled) {
@@ -142,7 +148,7 @@
 }
 
 .login-link {
-  color: #16A34A;
+  color: #16a34a;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -173,7 +179,7 @@
   width: 18px;
   height: 18px;
   margin: 2px 0 0 0;
-  accent-color: #16A34A;
+  accent-color: #16a34a;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -185,7 +191,7 @@
 }
 
 .privacy-link {
-  color: #16A34A;
+  color: #16a34a;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;

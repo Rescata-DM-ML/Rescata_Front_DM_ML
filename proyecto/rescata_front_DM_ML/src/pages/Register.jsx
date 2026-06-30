@@ -1,10 +1,10 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Link, useNavigate } from 'react-router-dom';
-import GenericIconInput from '../components/ui/GenericIconInput';
-import useAuthMutation from '../features/auth/hooks/useAuthMutation';
-import './Register.css';
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Link, useNavigate } from 'react-router-dom'
+import GenericIconInput from '../components/ui/GenericIconInput'
+import useAuthMutation from '../features/auth/hooks/useAuthMutation'
+import './Register.css'
 
 const registerSchema = z
   .object({
@@ -27,11 +27,9 @@ const registerSchema = z
     contrasena: z
       .string()
       .min(8, { message: 'La contraseña no cumple los requisitos' })
-      .refine(
-        (val) =>
-          /[A-Z]/.test(val) && /[0-9]/.test(val) && /[!@#$%^&*]/.test(val),
-        { message: 'La contraseña no cumple los requisitos' }
-      ),
+      .refine((val) => /[A-Z]/.test(val) && /[0-9]/.test(val) && /[!@#$%^&*]/.test(val), {
+        message: 'La contraseña no cumple los requisitos',
+      }),
     confirmacionContrasena: z.string(),
     consentimientoPrivacidad: z.literal(true, {
       errorMap: () => ({ message: 'Debes aceptar el aviso de privacidad' }),
@@ -40,11 +38,11 @@ const registerSchema = z
   .refine((data) => data.contrasena === data.confirmacionContrasena, {
     message: 'Las contraseñas no coinciden',
     path: ['confirmacionContrasena'],
-  });
+  })
 
 export default function Register() {
-  const navigate = useNavigate();
-  const { mutate, isLoading } = useAuthMutation();
+  const navigate = useNavigate()
+  const { mutate, isLoading } = useAuthMutation()
 
   const {
     register,
@@ -54,29 +52,26 @@ export default function Register() {
   } = useForm({
     resolver: zodResolver(registerSchema),
     mode: 'onBlur',
-  });
+  })
 
   const onSubmit = async (data) => {
     try {
-      await mutate(data);
-      navigate('/');
+      await mutate(data)
+      navigate('/')
     } catch (err) {
       if (err.message === 'correo_duplicado') {
         setError('correo', {
           type: 'manual',
           message: 'Este correo ya está registrado',
-        });
+        })
       }
     }
-  };
+  }
 
   // Helper to determine success state
   const isFieldSuccess = (fieldName) => {
-    return (
-      (dirtyFields[fieldName] || touchedFields[fieldName]) &&
-      !errors[fieldName]
-    );
-  };
+    return (dirtyFields[fieldName] || touchedFields[fieldName]) && !errors[fieldName]
+  }
 
   // SVGs for inputs
   const userIcon = (
@@ -93,7 +88,7 @@ export default function Register() {
       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
       <circle cx="12" cy="7" r="4"></circle>
     </svg>
-  );
+  )
 
   const emailIcon = (
     <svg
@@ -109,7 +104,7 @@ export default function Register() {
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
       <polyline points="22,6 12,13 2,6"></polyline>
     </svg>
-  );
+  )
 
   const lockIcon = (
     <svg
@@ -125,7 +120,7 @@ export default function Register() {
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
     </svg>
-  );
+  )
 
   return (
     <div className="register-page-container">
@@ -147,16 +142,10 @@ export default function Register() {
             <span className="brand-name">RESCATA</span>
           </div>
           <h1>Crear Cuenta</h1>
-          <p className="subtitle">
-            Únete como consumidor para rescatar comida y ayudar al planeta
-          </p>
+          <p className="subtitle">Únete como consumidor para rescatar comida y ayudar al planeta</p>
         </div>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="register-form"
-          noValidate
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="register-form" noValidate>
           <GenericIconInput
             id="nombre"
             label="Nombre Completo"
@@ -233,11 +222,7 @@ export default function Register() {
             )}
           </div>
 
-          <button
-            type="submit"
-            className="register-submit-btn"
-            disabled={!isValid || isLoading}
-          >
+          <button type="submit" className="register-submit-btn" disabled={!isValid || isLoading}>
             {isLoading ? (
               <span className="spinner-container">
                 <svg
@@ -250,12 +235,7 @@ export default function Register() {
                   fill="none"
                   strokeLinecap="round"
                 >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    strokeDasharray="42 20"
-                  ></circle>
+                  <circle cx="12" cy="12" r="10" strokeDasharray="42 20"></circle>
                 </svg>
                 Registrando...
               </span>
@@ -273,5 +253,5 @@ export default function Register() {
         </div>
       </div>
     </div>
-  );
+  )
 }
