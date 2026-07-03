@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-# Guardamos la ruta absoluta del mensaje antes de cambiar de carpeta
-MSG_FILE=$(pwd)/$1
-
-cd proyecto/rescata_front_DM_ML
-
-# Ejecutamos commitlint con la ruta guardada
-npx --no -- commitlint --edit "$MSG_FILE"
