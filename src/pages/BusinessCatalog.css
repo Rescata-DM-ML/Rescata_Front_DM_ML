@@ -1,0 +1,141 @@
+.business-catalog-container {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+  box-sizing: border-box;
+}
+
+.business-catalog-header-row {
+  margin-bottom: 1.5rem;
+}
+
+.business-catalog-info-card {
+  background: #ffffff;
+  border: 1px solid rgba(229, 228, 231, 0.7);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
+  margin-bottom: 3rem;
+}
+
+.business-catalog-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.business-catalog-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: rgba(22, 163, 74, 0.1);
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: inset 0 2px 4px rgba(22, 163, 74, 0.05);
+}
+
+.business-catalog-title-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.business-catalog-category-badge {
+  background: rgba(22, 163, 74, 0.08);
+  color: #16a34a;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.business-catalog-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0c0a0f;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.business-catalog-rating {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #16a34a;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.business-catalog-details {
+  border-top: 1px solid rgba(229, 228, 231, 0.5);
+  padding-top: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.business-catalog-offers-section {
+  width: 100%;
+}
+
+.catalog-section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0c0a0f;
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .business-catalog-container {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .business-catalog-info-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .business-catalog-brand {
+    gap: 1.25rem;
+  }
+
+  .business-catalog-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 1.75rem;
+    border-radius: 16px;
+  }
+
+  .business-catalog-name {
+    font-size: 1.5rem;
+  }
+
+  .catalog-section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+}

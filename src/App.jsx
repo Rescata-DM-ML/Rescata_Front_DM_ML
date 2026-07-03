@@ -3,6 +3,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Explore from './pages/Explore'
 import Perfil from './pages/Perfil'
+import ProductDetail from './pages/ProductDetail'
+import BusinessCatalog from './pages/BusinessCatalog'
 import AvisoPrivacidad from './pages/AvisoPrivacidad'
 import NegocioDashboard from './pages/NegocioDashboard'
 import SidebarLayout from './components/shared/SidebarLayout'
@@ -33,6 +35,8 @@ function App() {
         <Route element={<AuthGuard />}>
           <Route element={<SidebarLayout />}>
             <Route path="/explore" element={<Explore />} />
+            <Route path="/productos/:id" element={<ProductDetail />} />
+            <Route path="/negocio/:id" element={<BusinessCatalog />} />
             <Route path="/negocio/dashboard" element={<NegocioDashboard />} />
             <Route path="/perfil" element={<Perfil />} />
           </Route>
