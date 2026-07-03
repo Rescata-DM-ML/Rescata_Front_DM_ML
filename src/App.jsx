@@ -1,121 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import AvisoPrivacidad from './pages/AvisoPrivacidad'
+import NegocioDashboard from './pages/NegocioDashboard'
+import AuthGuard from './core/guards/AuthGuard'
+import { useAuthStore } from './features/auth/stores/auth.store'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+function RootRedirect() {
+  const isAuth = useAuthStore((state) => state.isAuth)
+  const user = useAuthStore((state) => state.user)
+
+  if (isAuth) {
+    return <Navigate to={user?.rol === 'negocio' ? '/negocio/dashboard' : '/explore'} replace />
+  }
+  return <Navigate to="/login" replace />
+}
+
+function Explore() {
+  const { user, clearUser } = useAuthStore()
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="home-container">
+      <div className="home-card">
+        <div className="logo-container centered">
+          <svg
+            viewBox="0 0 24 24"
+            width="48"
+            height="48"
+            fill="none"
+            stroke="#16A34A"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+          <span className="brand-name font-large">RESCATA</span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+
+        <div className="auth-profile-section">
+          <h1 className="welcome-title">¡Bienvenido, {user?.nombre || 'Usuario'}!</h1>
+          <p className="welcome-subtitle">
+            Tu cuenta de consumidor está activa y has iniciado sesión.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+          <div className="profile-details-card">
+            <h3>Datos de tu Sesión</h3>
+            <div className="detail-item">
+              <span className="detail-label">ID de Usuario:</span>
+              <span className="detail-value mono-text">{user?.id || 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Nombre:</span>
+              <span className="detail-value">{user?.nombre || 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Correo:</span>
+              <span className="detail-value">{user?.correo || 'N/A'}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Rol:</span>
+              <span className="detail-value badge">{user?.rol || 'consumidor'}</span>
+            </div>
+          </div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          <button onClick={clearUser} className="logout-btn">
+            Cerrar Sesión
+          </button>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </div>
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/aviso-privacidad" element={<AvisoPrivacidad />} />
+
+        {/* Rutas Protegidas */}
+        <Route element={<AuthGuard />}>
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/negocio/dashboard" element={<NegocioDashboard />} />
+        </Route>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

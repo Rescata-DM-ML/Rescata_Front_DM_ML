@@ -1,30 +1,28 @@
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Link, useNavigate } from 'react-router-dom';
-import GenericIconInput from '../components/ui/GenericIconInput';
-import useAuthMutation from '../features/auth/hooks/useAuthMutation';
-import './Login.css';
+import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Link, useNavigate } from 'react-router-dom'
+import GenericIconInput from '../components/ui/GenericIconInput'
+import useAuthMutation from '../features/auth/hooks/useAuthMutation'
+import './Login.css'
 
 const loginSchema = z.object({
   correo: z
     .string()
     .transform((val) => val.trim())
     .pipe(z.string().email({ message: 'Ingresa un correo válido' })),
-  contrasena: z
-    .string()
-    .min(1, { message: 'Ingresa tu contraseña' }),
-});
+  contrasena: z.string().min(1, { message: 'Ingresa tu contraseña' }),
+})
 
 export default function Login() {
-  const navigate = useNavigate();
-  const { login, isLoading } = useAuthMutation();
+  const navigate = useNavigate()
+  const { login, isLoading } = useAuthMutation()
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [failedAttempts, setFailedAttempts] = useState(0);
-  const [lockoutTime, setLockoutTime] = useState(0);
-  const [loginError, setLoginError] = useState(null);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [failedAttempts, setFailedAttempts] = useState(0)
+  const [lockoutTime, setLockoutTime] = useState(0)
+  const [loginError, setLoginError] = useState(null)
 
   const {
     register,
@@ -33,53 +31,50 @@ export default function Login() {
   } = useForm({
     resolver: zodResolver(loginSchema),
     mode: 'onBlur',
-  });
+  })
 
   // Countdown timer for brute force lockout
   useEffect(() => {
-    let timer;
+    let timer
     if (lockoutTime > 0) {
       timer = setInterval(() => {
         setLockoutTime((prev) => {
           if (prev <= 1) {
-            setFailedAttempts(0);
-            return 0;
+            setFailedAttempts(0)
+            return 0
           }
-          return prev - 1;
-        });
-      }, 1000);
+          return prev - 1
+        })
+      }, 1000)
     }
-    return () => clearInterval(timer);
-  }, [lockoutTime]);
+    return () => clearInterval(timer)
+  }, [lockoutTime])
 
   const onSubmit = async (data) => {
-    if (lockoutTime > 0) return;
-    setLoginError(null);
+    if (lockoutTime > 0) return
+    setLoginError(null)
 
     try {
-      await login(data.correo, data.contrasena);
-      setFailedAttempts(0); // Reset consecutive failed attempts on success
-      navigate('/explore');
+      await login(data.correo, data.contrasena)
+      setFailedAttempts(0) // Reset consecutive failed attempts on success
+      navigate('/explore')
     } catch (err) {
       if (err.message === 'credenciales_invalidas') {
-        setLoginError('Correo o contraseña incorrectos');
-        const nextAttempts = failedAttempts + 1;
-        setFailedAttempts(nextAttempts);
+        setLoginError('Correo o contraseña incorrectos')
+        const nextAttempts = failedAttempts + 1
+        setFailedAttempts(nextAttempts)
         if (nextAttempts >= 5) {
-          setLockoutTime(30);
+          setLockoutTime(30)
         }
       } else {
-        setLoginError('Ocurrió un error al iniciar sesión. Inténtalo de nuevo.');
+        setLoginError('Ocurrió un error al iniciar sesión. Inténtalo de nuevo.')
       }
     }
-  };
+  }
 
   const isFieldSuccess = (fieldName) => {
-    return (
-      (dirtyFields[fieldName] || touchedFields[fieldName]) &&
-      !errors[fieldName]
-    );
-  };
+    return (dirtyFields[fieldName] || touchedFields[fieldName]) && !errors[fieldName]
+  }
 
   // SVGs for inputs
   const emailIcon = (
@@ -96,7 +91,7 @@ export default function Login() {
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
       <polyline points="22,6 12,13 2,6"></polyline>
     </svg>
-  );
+  )
 
   const lockIcon = (
     <svg
@@ -112,7 +107,7 @@ export default function Login() {
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
     </svg>
-  );
+  )
 
   return (
     <div className="login-page-container">
@@ -134,9 +129,7 @@ export default function Login() {
             <span className="brand-name">RESCATA</span>
           </div>
           <h1>Iniciar Sesión</h1>
-          <p className="subtitle">
-            Accede a tu cuenta para salvar excedentes de alimentos
-          </p>
+          <p className="subtitle">Accede a tu cuenta para salvar excedentes de alimentos</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="login-form" noValidate>
@@ -192,12 +185,7 @@ export default function Login() {
                   fill="none"
                   strokeLinecap="round"
                 >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    strokeDasharray="42 20"
-                  ></circle>
+                  <circle cx="12" cy="12" r="10" strokeDasharray="42 20"></circle>
                 </svg>
                 Iniciando sesión...
               </span>
@@ -215,5 +203,5 @@ export default function Login() {
         </div>
       </div>
     </div>
-  );
+  )
 }

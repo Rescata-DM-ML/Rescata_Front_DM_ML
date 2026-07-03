@@ -1,4 +1,4 @@
-import './GenericIconInput.css';
+import './GenericIconInput.css'
 
 export default function GenericIconInput({
   label,
@@ -13,8 +13,8 @@ export default function GenericIconInput({
   isPasswordVisible,
   ...rest
 }) {
-  const hasError = !!error;
-  const isSuccess = !!success && !error;
+  const hasError = !!error
+  const isSuccess = !!success && !error
 
   return (
     <div className="generic-input-container">
@@ -124,10 +124,8 @@ export default function GenericIconInput({
         )}
       </div>
       <div className="generic-input-error-wrapper">
-        <span className={`generic-input-error-message ${hasError ? 'show' : ''}`}>
-          {error}
-        </span>
+        <span className={`generic-input-error-message ${hasError ? 'show' : ''}`}>{error}</span>
       </div>
     </div>
-  );
+  )
 }
