@@ -240,7 +240,15 @@ export default function ProductDetail() {
                   <polyline points="9 22 9 12 15 12 15 22" />
                 </svg>
                 <div>
-                  <h3 className="business-title">{negocio.nombre}</h3>
+                  {negocio.id ? (
+                    <Link to={`/negocio/${negocio.id}`} style={{ textDecoration: 'none' }}>
+                      <h3 className="business-title" style={{ color: '#16a34a', textDecoration: 'underline', cursor: 'pointer' }}>
+                        {negocio.nombre}
+                      </h3>
+                    </Link>
+                  ) : (
+                    <h3 className="business-title">{negocio.nombre}</h3>
+                  )}
                   <div className="business-rating">
                     ★ {negocio.calificacionPromedio ? negocio.calificacionPromedio.toFixed(1) : '5.0'}
                   </div>
