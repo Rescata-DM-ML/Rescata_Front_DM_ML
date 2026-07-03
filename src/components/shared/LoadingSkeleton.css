@@ -1,0 +1,70 @@
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.skeleton-card {
+  background: #ffffff;
+  border: 1px solid rgba(229, 228, 231, 0.7);
+  border-radius: 16px;
+  overflow: hidden;
+  height: 340px; /* matched to ProductFeedCard height */
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.025);
+  box-sizing: border-box;
+}
+
+.skeleton-card * {
+  animation: pulse 1.5s ease-in-out infinite;
+  background: #e5e4e7;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 180px;
+}
+
+.skeleton-info {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: transparent;
+  animation: none; /* info container itself shouldn't pulse */
+}
+
+.skeleton-line {
+  height: 16px;
+  border-radius: 8px;
+}
+
+.skeleton-title {
+  width: 80%;
+  height: 20px;
+}
+
+.skeleton-price-dist {
+  width: 95%;
+  margin-top: 4px;
+}
+
+.skeleton-business {
+  width: 60%;
+  margin-top: auto;
+}
