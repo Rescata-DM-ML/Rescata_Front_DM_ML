@@ -1,18 +1,24 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import AvisoPrivacidad from './pages/AvisoPrivacidad';
-import AuthGuard from './core/guards/AuthGuard';
-import { useAuthStore } from './features/auth/stores/auth.store';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import AvisoPrivacidad from './pages/AvisoPrivacidad'
+import NegocioDashboard from './pages/NegocioDashboard'
+import AuthGuard from './core/guards/AuthGuard'
+import { useAuthStore } from './features/auth/stores/auth.store'
+import './App.css'
 
 function RootRedirect() {
-  const isAuth = useAuthStore((state) => state.isAuth);
-  return <Navigate to={isAuth ? '/explore' : '/login'} replace />;
+  const isAuth = useAuthStore((state) => state.isAuth)
+  const user = useAuthStore((state) => state.user)
+
+  if (isAuth) {
+    return <Navigate to={user?.rol === 'negocio' ? '/negocio/dashboard' : '/explore'} replace />
+  }
+  return <Navigate to="/login" replace />
 }
 
 function Explore() {
-  const { user, clearUser } = useAuthStore();
+  const { user, clearUser } = useAuthStore()
 
   return (
     <div className="home-container">
@@ -35,8 +41,10 @@ function Explore() {
 
         <div className="auth-profile-section">
           <h1 className="welcome-title">¡Bienvenido, {user?.nombre || 'Usuario'}!</h1>
-          <p className="welcome-subtitle">Tu cuenta de consumidor está activa y has iniciado sesión.</p>
-          
+          <p className="welcome-subtitle">
+            Tu cuenta de consumidor está activa y has iniciado sesión.
+          </p>
+
           <div className="profile-details-card">
             <h3>Datos de tu Sesión</h3>
             <div className="detail-item">
@@ -63,7 +71,7 @@ function Explore() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function App() {
@@ -74,16 +82,17 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/aviso-privacidad" element={<AvisoPrivacidad />} />
-        
+
         {/* Rutas Protegidas */}
         <Route element={<AuthGuard />}>
           <Route path="/explore" element={<Explore />} />
+          <Route path="/negocio/dashboard" element={<NegocioDashboard />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
