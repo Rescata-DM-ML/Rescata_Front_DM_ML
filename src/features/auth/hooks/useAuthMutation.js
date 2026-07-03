@@ -72,6 +72,7 @@ export default function useAuthMutation() {
         nombre: data.user?.nombre || data.nombre || formData.nombre,
         correo: data.user?.correo || data.correo || formData.correo,
         rol: data.user?.rol || data.rol || 'negocio',
+        negocio: data.user?.negocio || data.negocio || null,
       }
 
       setUser(userData)
@@ -111,6 +112,7 @@ export default function useAuthMutation() {
         nombre: data.user?.nombre || data.nombre || 'Usuario',
         correo: data.user?.correo || data.correo || correo,
         rol: data.user?.rol || data.rol || 'consumidor',
+        negocio: data.user?.negocio || data.negocio || null,
       }
 
       setUser(userData)
