@@ -29,7 +29,7 @@ function formatearTiempoCaducidad(fechaCaducidadStr) {
 }
 
 export default function ProductFeedCard({ producto }) {
-  const { nombre, precioOferta, distanciaKm, fotoUrl, fechaCaducidad, negocio } = producto
+  const { nombre, precioOriginal, precioOferta, distanciaKm, fotoUrl, fechaCaducidad, negocio } = producto
 
   const fallbackImage = 'https://placehold.co/600x400/16a34a/ffffff?text=RESCATA'
   const imgUrl = fotoUrl || fallbackImage
@@ -57,12 +57,11 @@ export default function ProductFeedCard({ producto }) {
         <div className="product-card-pricing-row">
           <div className="product-card-prices">
             <span className="product-card-price-offer">${precioOferta.toFixed(2)}</span>
-            {/* 
-              TODO: Mostrar precio original tachado cuando el backend
-              lo incluya en el feed de productos cercanos.
-              Ejemplo:
-              <span className="product-card-price-original">${precioOriginal.toFixed(2)}</span>
-            */}
+            <span className="product-card-price-original">
+              {precioOriginal !== undefined && precioOriginal !== null
+                ? `$${precioOriginal.toFixed(2)}`
+                : 'N/A'}
+            </span>
           </div>
 
           <div className="product-card-distance">

@@ -11,30 +11,54 @@ export default function useGetProductosCercanos() {
   const [nextCursor, setNextCursor] = useState(null)
   const [hayMas, setHayMas] = useState(false)
   const [paginaActual, setPaginaActual] = useState(1)
+  const [estadoPermisoNativo, setEstadoPermisoNativo] = useState('prompt') // 'granted', 'denied', 'prompt'
+
+  useEffect(() => {
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        setEstadoPermisoNativo(result.state)
+        result.onchange = () => {
+          setEstadoPermisoNativo(result.state)
+        }
+      }).catch(err => {
+        console.warn('Error al consultar permisos de geolocalización:', err)
+      })
+    }
+  }, [])
+
+  console.log('[DEBUG] Hook Render - permisoGeo:', permisoGeo, 'estadoPermisoNativo:', estadoPermisoNativo, 'coords:', coordenadas, 'productos:', productos.length)
 
   const solicitarGeolocalizacion = useCallback(() => {
     if (!navigator.geolocation) {
       setPermisoGeo('denied')
+      setCoordenadas(null)
+      setProductos([])
       return
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log('[DEBUG] Geolocalización EXITOSA - posición:', position.coords)
         setCoordenadas({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         })
         setPermisoGeo('granted')
+        setEstadoPermisoNativo('granted')
       },
       (err) => {
-        console.error('Error al obtener geolocalización:', err)
+        console.warn('[DEBUG] Geolocalización FALLIDA - error:', err)
         setPermisoGeo('denied')
+        setEstadoPermisoNativo('denied')
+        setCoordenadas(null)
+        setProductos([])
       }
     )
   }, [])
 
   const cargarProductos = useCallback(
     async (esCargaInicial = false) => {
+      console.log('[DEBUG] cargarProductos llamado - coords:', coordenadas, 'esCargaInicial:', esCargaInicial)
       if (!coordenadas) return
 
       const pageToFetch = esCargaInicial ? 1 : paginaActual + 1
@@ -72,6 +96,7 @@ export default function useGetProductosCercanos() {
           }
         }
 
+        console.log('[DEBUG] API retornó ofertas:', dataArray.length)
         setProductos((prev) => (esCargaInicial ? dataArray : [...prev, ...dataArray]))
 
         setNextCursor(cursorVal)
@@ -114,8 +139,14 @@ export default function useGetProductosCercanos() {
     nextCursor,
     hayMas,
     permisoGeo,
+    estadoPermisoNativo,
+    coordenadas,
     solicitarGeolocalizacion,
-    denegarPermisoManual: () => setPermisoGeo('denied'),
+    denegarPermisoManual: () => {
+      setPermisoGeo('denied')
+      setCoordenadas(null)
+      setProductos([])
+    },
     cargarMas: () => cargarProductos(false),
   }
 }
