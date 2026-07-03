@@ -89,7 +89,8 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 2.6rem; /* Ensures consistent alignment across grid items */
+  height: 2.6rem;
+  /* Ensures consistent alignment across grid items */
 }
 
 .product-card-pricing-row {
@@ -108,7 +109,7 @@
 .product-card-price-offer {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #16a34a;
+  color: #ea361e;
   line-height: 1.1;
 }
 

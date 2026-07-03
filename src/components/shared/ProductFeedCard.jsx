@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './ProductFeedCard.css'
 
 function formatearTiempoCaducidad(fechaCaducidadStr) {
@@ -36,53 +37,62 @@ export default function ProductFeedCard({ producto }) {
   const tiempoCaducidad = formatearTiempoCaducidad(fechaCaducidad)
 
   return (
-    <div className="product-feed-card">
-      <div className="product-card-image-container">
-        <img src={imgUrl} alt={nombre} className="product-card-image" />
-        <span className="product-card-badge-caducidad">{tiempoCaducidad}</span>
-      </div>
-
-      <div className="product-card-content">
-        <div className="product-card-business-row">
-          <span className="product-card-business-name">{negocio?.nombre || 'Negocio'}</span>
-          {negocio?.calificacionPromedio !== undefined && (
-            <span className="detail-value badge product-card-rating">
-              ★ {negocio.calificacionPromedio.toFixed(1)}
-            </span>
-          )}
+    <Link to={`/productos/${producto.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+      <div className="product-feed-card">
+        <div className="product-card-image-container">
+          <img src={imgUrl} alt={nombre} className="product-card-image" />
+          <span className="product-card-badge-caducidad">{tiempoCaducidad}</span>
         </div>
 
-        <h3 className="product-card-title">{nombre}</h3>
-
-        <div className="product-card-pricing-row">
-          <div className="product-card-prices">
-            <span className="product-card-price-offer">${precioOferta.toFixed(2)}</span>
-            <span className="product-card-price-original">
-              {precioOriginal !== undefined && precioOriginal !== null
-                ? `$${precioOriginal.toFixed(2)}`
-                : 'N/A'}
-            </span>
+        <div className="product-card-content">
+          <div className="product-card-business-row">
+            <span className="product-card-business-name">{negocio?.nombre || 'Negocio'}</span>
+            {negocio?.calificacionPromedio !== undefined && (
+              <span className="detail-value badge product-card-rating">
+                ★ {negocio.calificacionPromedio.toFixed(1)}
+              </span>
+            )}
           </div>
 
-          <div className="product-card-distance">
-            <svg
-              viewBox="0 0 24 24"
-              width="14"
-              height="14"
-              fill="none"
-              stroke="#6b6375"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="product-card-distance-icon"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
+          <h3 className="product-card-title">{nombre}</h3>
+
+          <div className="product-card-pricing-row">
+            <div className="product-card-prices">
+              <span className="product-card-price-offer">${precioOferta.toFixed(2)}</span>
+              <span className="product-card-price-original">
+                {precioOriginal !== undefined && precioOriginal !== null
+                  ? `$${precioOriginal.toFixed(2)}`
+                  : 'N/A'}
+              </span>
+            </div>
+
+            <div className="product-card-distance">
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="#6b6375"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="product-card-distance-icon"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>{distanciaKm.toFixed(1)} km</span>
+            </div>
+          </div>
+
+          <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px dashed rgba(229, 228, 231, 0.5)', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontSize: '0.825rem', fontWeight: '700', color: '#16a34a', gap: '0.25rem' }}>
+            <span>Ver detalle</span>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
             </svg>
-            <span>{distanciaKm.toFixed(1)} km</span>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
