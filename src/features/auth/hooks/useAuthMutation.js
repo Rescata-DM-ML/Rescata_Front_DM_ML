@@ -95,7 +95,6 @@ export default function useAuthMutation() {
       setIsLoading(false)
     }
   }
-
   // Login mutation
   const login = async (correo, contrasena) => {
     setIsLoading(true)
