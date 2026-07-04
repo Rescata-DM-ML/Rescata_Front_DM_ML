@@ -1,3 +1,12 @@
+// AUDIT: Cumple con SEG-FE-04 (Validación en cliente con minimización de datos)
+// - Solo contiene campos mínimos indispensables según el rol.
+// - Registro de consumidor: contiene nombre, correo, contrasena, confirmacionContrasena, consentimientoPrivacidad.
+// - Registro de negocio (Catalina): contiene nombre, direccion, categoria. La geolocalización se realiza en backend a partir de la dirección.
+// - No existen campos ocultos (type="hidden") en ningún paso.
+// - Aplica automáticamente .trim() en el esquema Zod antes de la validación y el envío en todos los campos de texto (nombre, correo, nombreNegocio, direccionNegocio).
+// - La validación ocurre en el cliente antes de llamar a useAuthMutation.
+// - Los botones de envío ("Registrarse" y "Finalizar Registro") se deshabilitan si !isValid || isLoading.
+
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -36,8 +45,14 @@ const registerSchema = z
       errorMap: () => ({ message: 'Debes aceptar el aviso de privacidad' }),
     }),
     registrarComoNegocio: z.boolean().optional(),
-    nombreNegocio: z.string().optional(),
-    direccionNegocio: z.string().optional(),
+    nombreNegocio: z
+      .string()
+      .optional()
+      .transform((val) => (val === undefined ? undefined : val.trim())),
+    direccionNegocio: z
+      .string()
+      .optional()
+      .transform((val) => (val === undefined ? undefined : val.trim())),
     categoriaNegocio: z.string().optional(),
   })
   .refine((data) => data.contrasena === data.confirmacionContrasena, {
@@ -620,7 +635,7 @@ export default function Register() {
                 <button
                   type="submit"
                   className="register-submit-btn step2-submit-btn"
-                  disabled={isLoading}
+                  disabled={!isValid || isLoading}
                 >
                   {isLoading ? (
                     <span className="spinner-container">

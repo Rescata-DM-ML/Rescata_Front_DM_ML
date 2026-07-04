@@ -30,14 +30,18 @@ function formatearTiempoCaducidad(fechaCaducidadStr) {
 }
 
 export default function ProductFeedCard({ producto }) {
-  const { nombre, precioOriginal, precioOferta, distanciaKm, fotoUrl, fechaCaducidad, negocio } = producto
+  const { nombre, precioOriginal, precioOferta, distanciaKm, fotoUrl, fechaCaducidad, negocio } =
+    producto
 
   const fallbackImage = 'https://placehold.co/600x400/16a34a/ffffff?text=RESCATA'
   const imgUrl = fotoUrl || fallbackImage
   const tiempoCaducidad = formatearTiempoCaducidad(fechaCaducidad)
 
   return (
-    <Link to={`/productos/${producto.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+    <Link
+      to={`/productos/${producto.id}`}
+      style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+    >
       <div className="product-feed-card">
         <div className="product-card-image-container">
           <img src={imgUrl} alt={nombre} className="product-card-image" />
@@ -85,9 +89,31 @@ export default function ProductFeedCard({ producto }) {
             </div>
           </div>
 
-          <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px dashed rgba(229, 228, 231, 0.5)', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontSize: '0.825rem', fontWeight: '700', color: '#16a34a', gap: '0.25rem' }}>
+          <div
+            style={{
+              marginTop: '0.75rem',
+              paddingTop: '0.75rem',
+              borderTop: '1px dashed rgba(229, 228, 231, 0.5)',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              fontSize: '0.825rem',
+              fontWeight: '700',
+              color: '#16a34a',
+              gap: '0.25rem',
+            }}
+          >
             <span>Ver detalle</span>
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              viewBox="0 0 24 24"
+              width="12"
+              height="12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </div>

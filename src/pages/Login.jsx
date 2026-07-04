@@ -1,3 +1,10 @@
+// AUDIT: Cumple con SEG-FE-04 (Validación en cliente con minimización de datos)
+// - Solo contiene campos mínimos indispensables (correo, contrasena) en el DOM.
+// - No existen campos ocultos (type="hidden").
+// - Aplica automáticamente .trim() al correo mediante el esquema Zod antes de la validación y el envío.
+// - La validación ocurre del lado del cliente antes de cualquier petición HTTP (con handleSubmit).
+// - El botón de envío está deshabilitado si el formulario es inválido o está cargando.
+
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'

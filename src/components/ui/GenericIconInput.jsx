@@ -1,3 +1,8 @@
+// AUDIT: Cumple con SEG-FE-04 (Validación en cliente con minimización de datos)
+// - El componente no inyecta atributos data-* personalizados ni genera inputs ocultos.
+// - Pasa limpiamente al input nativo solo las propiedades necesarias mediante {...rest} e id/type/placeholder.
+// - No almacena localmente ni captura datos del usuario por fuera de la lógica del formulario.
+
 import './GenericIconInput.css'
 
 export default function GenericIconInput({
