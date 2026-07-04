@@ -22,7 +22,16 @@ export default function Explore() {
 
   const sentinelRef = useRef(null)
 
-  console.log('[DEBUG] Explore Render - permisoGeo:', permisoGeo, 'estadoPermisoNativo:', estadoPermisoNativo, 'coords:', coordenadas, 'productos:', productos.length)
+  console.log(
+    '[DEBUG] Explore Render - permisoGeo:',
+    permisoGeo,
+    'estadoPermisoNativo:',
+    estadoPermisoNativo,
+    'coords:',
+    coordenadas,
+    'productos:',
+    productos.length
+  )
 
   useEffect(() => {
     if (!sentinelRef.current) return
@@ -49,10 +58,7 @@ export default function Explore() {
 
       {/* Caso A: Nunca ha solicitado permisos (el estado de geolocalización en navegador es 'prompt' y la app está limpia) */}
       {estadoPermisoNativo === 'prompt' && permisoGeo === 'pending' && (
-        <GeolocationBanner
-          onAceptar={solicitarGeolocalizacion}
-          onRechazar={denegarPermisoManual}
-        />
+        <GeolocationBanner onAceptar={solicitarGeolocalizacion} onRechazar={denegarPermisoManual} />
       )}
 
       {/* Caso B: El usuario dio a "Ahora no" en nuestro banner (Rechazo temporal en la app, pero en el navegador sigue en 'prompt') */}
@@ -75,7 +81,8 @@ export default function Explore() {
           <div className="fallback-banner-content">
             <h3>Ubicación no compartida</h3>
             <p>
-              Has decidido no compartir tu ubicación. Actívala para poder calcular las distancias y mostrarte las ofertas más cercanas a ti.
+              Has decidido no compartir tu ubicación. Actívala para poder calcular las distancias y
+              mostrarte las ofertas más cercanas a ti.
             </p>
           </div>
           <button onClick={solicitarGeolocalizacion} className="btn-primary retry-geo-btn">
@@ -105,8 +112,9 @@ export default function Explore() {
           <div className="fallback-banner-content">
             <h3>Ubicación bloqueada</h3>
             <p>
-              Has bloqueado el acceso a la ubicación en tu navegador.
-              Para ver ofertas cercanas, haz clic en el icono del candado en la barra de direcciones de tu navegador y activa el permiso de <strong>Ubicación</strong>.
+              Has bloqueado el acceso a la ubicación en tu navegador. Para ver ofertas cercanas, haz
+              clic en el icono del candado en la barra de direcciones de tu navegador y activa el
+              permiso de <strong>Ubicación</strong>.
             </p>
           </div>
         </div>
@@ -114,7 +122,10 @@ export default function Explore() {
 
       {/* Cargando coordenadas del navegador si ya se tiene el permiso */}
       {estadoPermisoNativo === 'granted' && !coordenadas && (
-        <div className="loading-geo-container" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
+        <div
+          className="loading-geo-container"
+          style={{ textAlign: 'center', padding: '3rem 2rem' }}
+        >
           <LoadingSkeleton cantidad={3} />
           <p style={{ color: '#6b6375', marginTop: '1.5rem', fontWeight: '500' }}>
             Obteniendo coordenadas de ubicación precisas...

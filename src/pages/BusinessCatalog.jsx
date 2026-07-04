@@ -48,7 +48,17 @@ export default function BusinessCatalog() {
     return (
       <div className="business-catalog-container error-container">
         <div className="fallback-banner" style={{ border: '1px solid rgba(220, 38, 38, 0.2)' }}>
-          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#dc2626" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="fallback-banner-icon">
+          <svg
+            viewBox="0 0 24 24"
+            width="36"
+            height="36"
+            fill="none"
+            stroke="#dc2626"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="fallback-banner-icon"
+          >
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="12"></line>
             <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -75,7 +85,7 @@ export default function BusinessCatalog() {
       cafeteria: 'Cafetería',
       restaurante: 'Restaurante',
       supermercado: 'Supermercado',
-      tienda: 'Tienda / Abarrotes'
+      tienda: 'Tienda / Abarrotes',
     }
     return categorias[cat] || cat || 'Establecimiento'
   }
@@ -85,7 +95,16 @@ export default function BusinessCatalog() {
       {/* Botón de Atrás */}
       <div className="business-catalog-header-row">
         <button onClick={() => navigate(-1)} className="btn-back">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <polyline points="15 18 9 12 15 6" />
           </svg>
           <span>Atrás</span>
@@ -95,9 +114,7 @@ export default function BusinessCatalog() {
       {/* Tarjeta de Información Superior del Negocio */}
       <section className="business-catalog-info-card">
         <div className="business-catalog-brand">
-          <div className="business-catalog-avatar">
-            {nombre.charAt(0).toUpperCase()}
-          </div>
+          <div className="business-catalog-avatar">{nombre.charAt(0).toUpperCase()}</div>
           <div className="business-catalog-title-section">
             <span className="business-catalog-category-badge">
               {obtenerNombreCategoria(categoria)}
@@ -119,7 +136,7 @@ export default function BusinessCatalog() {
       {/* Listado de Ofertas del Negocio */}
       <section className="business-catalog-offers-section">
         <h2 className="catalog-section-title">Ofertas de este establecimiento</h2>
-        
+
         {productos.length === 0 ? (
           <div className="empty-state">
             <p>Este establecimiento no tiene ofertas publicadas en este momento.</p>
@@ -127,19 +144,19 @@ export default function BusinessCatalog() {
         ) : (
           <div className="explore-products-grid">
             {productos.map((producto) => (
-              // Asegurar que el componente de la tarjeta reciba las coordenadas simuladas 
+              // Asegurar que el componente de la tarjeta reciba las coordenadas simuladas
               // para evitar errores al renderizar distanciaKm si no las calcula
-              <ProductFeedCard 
-                key={producto.id} 
+              <ProductFeedCard
+                key={producto.id}
                 producto={{
                   ...producto,
                   // Si no trae distanciaKm de la respuesta, asignarle 0
                   distanciaKm: producto.distanciaKm !== undefined ? producto.distanciaKm : 0,
                   negocio: {
                     nombre: nombre,
-                    calificacionPromedio: calificacionPromedio
-                  }
-                }} 
+                    calificacionPromedio: calificacionPromedio,
+                  },
+                }}
               />
             ))}
           </div>
