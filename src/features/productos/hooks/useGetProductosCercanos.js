@@ -15,18 +15,30 @@ export default function useGetProductosCercanos() {
 
   useEffect(() => {
     if (navigator.permissions && navigator.permissions.query) {
-      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-        setEstadoPermisoNativo(result.state)
-        result.onchange = () => {
+      navigator.permissions
+        .query({ name: 'geolocation' })
+        .then((result) => {
           setEstadoPermisoNativo(result.state)
-        }
-      }).catch(err => {
-        console.warn('Error al consultar permisos de geolocalización:', err)
-      })
+          result.onchange = () => {
+            setEstadoPermisoNativo(result.state)
+          }
+        })
+        .catch((err) => {
+          console.warn('Error al consultar permisos de geolocalización:', err)
+        })
     }
   }, [])
 
-  console.log('[DEBUG] Hook Render - permisoGeo:', permisoGeo, 'estadoPermisoNativo:', estadoPermisoNativo, 'coords:', coordenadas, 'productos:', productos.length)
+  console.log(
+    '[DEBUG] Hook Render - permisoGeo:',
+    permisoGeo,
+    'estadoPermisoNativo:',
+    estadoPermisoNativo,
+    'coords:',
+    coordenadas,
+    'productos:',
+    productos.length
+  )
 
   const solicitarGeolocalizacion = useCallback(() => {
     if (!navigator.geolocation) {
@@ -58,7 +70,12 @@ export default function useGetProductosCercanos() {
 
   const cargarProductos = useCallback(
     async (esCargaInicial = false) => {
-      console.log('[DEBUG] cargarProductos llamado - coords:', coordenadas, 'esCargaInicial:', esCargaInicial)
+      console.log(
+        '[DEBUG] cargarProductos llamado - coords:',
+        coordenadas,
+        'esCargaInicial:',
+        esCargaInicial
+      )
       if (!coordenadas) return
 
       const pageToFetch = esCargaInicial ? 1 : paginaActual + 1

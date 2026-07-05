@@ -17,7 +17,7 @@ export default function Perfil() {
       cafeteria: 'Cafetería',
       restaurante: 'Restaurante',
       supermercado: 'Supermercado',
-      tienda: 'Tienda / Abarrotes'
+      tienda: 'Tienda / Abarrotes',
     }
     return categorias[cat] || cat || 'No especificada'
   }
@@ -26,9 +26,7 @@ export default function Perfil() {
     <main className="profile-section-container">
       <div className="profile-card">
         <div className="profile-card-header">
-          <div className="profile-avatar-placeholder">
-            {inicial}
-          </div>
+          <div className="profile-avatar-placeholder">{inicial}</div>
           <h1 className="welcome-title">¡Bienvenido, {user?.nombre || 'Usuario'}!</h1>
           <p className="welcome-subtitle">
             Tu cuenta de {isNegocio ? 'negocio' : 'consumidor'} está activa y has iniciado sesión.
@@ -52,9 +50,7 @@ export default function Perfil() {
           </div>
           <div className="detail-item">
             <span className="detail-label">Rol de Acceso:</span>
-            <span className="detail-value badge">
-              {isNegocio ? 'Negocio' : 'Consumidor'}
-            </span>
+            <span className="detail-value badge">{isNegocio ? 'Negocio' : 'Consumidor'}</span>
           </div>
         </div>
 
