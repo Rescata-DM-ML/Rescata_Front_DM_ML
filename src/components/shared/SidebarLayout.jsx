@@ -69,6 +69,26 @@ export default function SidebarLayout() {
     </svg>
   )
 
+  const listIcon = (
+    <svg
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="12" x2="3.01" y2="12"></line>
+      <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </svg>
+  )
+
   const logoutIcon = (
     <svg
       viewBox="0 0 24 24"
@@ -135,14 +155,24 @@ export default function SidebarLayout() {
 
         <nav className="explore-sidebar-menu">
           {isNegocio ? (
-            <NavLink
-              to="/negocio/dashboard"
-              className={({ isActive }) => `explore-sidebar-item ${isActive ? 'active' : ''}`}
-              onClick={() => setSidebarOpen(false)}
-            >
-              {storeIcon}
-              <span>Mis Productos</span>
-            </NavLink>
+            <>
+              <NavLink
+                to="/negocio/dashboard"
+                className={({ isActive }) => `explore-sidebar-item ${isActive ? 'active' : ''}`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                {storeIcon}
+                <span>Mis Productos</span>
+              </NavLink>
+              <NavLink
+                to="/negocio/pedidos"
+                className={({ isActive }) => `explore-sidebar-item ${isActive ? 'active' : ''}`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                {listIcon}
+                <span>Pedidos</span>
+              </NavLink>
+            </>
           ) : (
             <NavLink
               to="/explore"

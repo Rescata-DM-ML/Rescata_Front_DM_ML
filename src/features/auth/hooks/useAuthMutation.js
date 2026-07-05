@@ -20,12 +20,12 @@ export default function useAuthMutation() {
         consentimientoPrivacidad: formData.consentimientoPrivacidad,
       })
 
-      const data = response.data || {}
+      const wrappedData = response.data.data ? response.data.data : response.data
       const userData = {
-        id: data.id || data.user?.id,
-        nombre: data.nombre || data.user?.nombre || formData.nombre,
-        correo: data.correo || data.user?.correo || formData.correo,
-        rol: data.rol || data.user?.rol || 'consumidor',
+        id: wrappedData.id || wrappedData.user?.id,
+        nombre: wrappedData.nombre || wrappedData.user?.nombre || formData.nombre,
+        correo: wrappedData.correo || wrappedData.user?.correo || formData.correo,
+        rol: wrappedData.rol || wrappedData.user?.rol || 'consumidor',
       }
 
       setUser(userData)
@@ -66,13 +66,13 @@ export default function useAuthMutation() {
         categoriaNegocio: formData.categoriaNegocio,
       })
 
-      const data = response.data || {}
+      const wrappedData = response.data.data ? response.data.data : response.data
       const userData = {
-        id: data.user?.id || data.id,
-        nombre: data.user?.nombre || data.nombre || formData.nombre,
-        correo: data.user?.correo || data.correo || formData.correo,
-        rol: data.user?.rol || data.rol || 'negocio',
-        negocio: data.user?.negocio || data.negocio || null,
+        id: wrappedData.user?.id || wrappedData.id,
+        nombre: wrappedData.user?.nombre || wrappedData.nombre || formData.nombre,
+        correo: wrappedData.user?.correo || wrappedData.correo || formData.correo,
+        rol: wrappedData.user?.rol || wrappedData.rol || 'negocio',
+        negocio: wrappedData.user?.negocio || wrappedData.negocio || null,
       }
 
       setUser(userData)
@@ -106,13 +106,13 @@ export default function useAuthMutation() {
         contrasena,
       })
 
-      const data = response.data || {}
+      const wrappedData = response.data.data ? response.data.data : response.data
       const userData = {
-        id: data.user?.id || data.id,
-        nombre: data.user?.nombre || data.nombre || 'Usuario',
-        correo: data.user?.correo || data.correo || correo,
-        rol: data.user?.rol || data.rol || 'consumidor',
-        negocio: data.user?.negocio || data.negocio || null,
+        id: wrappedData.user?.id || wrappedData.id,
+        nombre: wrappedData.user?.nombre || wrappedData.nombre || 'Usuario',
+        correo: wrappedData.user?.correo || wrappedData.correo || correo,
+        rol: wrappedData.user?.rol || wrappedData.rol || 'consumidor',
+        negocio: wrappedData.user?.negocio || wrappedData.negocio || null,
       }
 
       setUser(userData)
