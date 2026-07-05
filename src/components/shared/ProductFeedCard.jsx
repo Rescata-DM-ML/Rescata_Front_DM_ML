@@ -34,7 +34,10 @@ export default function ProductFeedCard({ producto }) {
     producto
 
   const fallbackImage = 'https://placehold.co/600x400/16a34a/ffffff?text=RESCATA'
-  const imgUrl = fotoUrl || fallbackImage
+  let imgUrl = fotoUrl || fallbackImage
+  if (imgUrl.includes('pub-mock.r2.dev')) {
+    imgUrl = `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(nombre)}`
+  }
   const tiempoCaducidad = formatearTiempoCaducidad(fechaCaducidad)
 
   return (
