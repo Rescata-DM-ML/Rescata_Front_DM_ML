@@ -6,3 +6,21 @@ export async function getProductosCercanos({ lat, lng, radio = 10, page = 1, lim
   })
   return response.data
 }
+
+export async function publicarProducto(data) {
+  const response = await api.post('/productos', data)
+  return response.data
+}
+
+export async function subirImagenesProducto(id, files) {
+  const formData = new FormData()
+  files.forEach((file) => {
+    formData.append('images', file)
+  })
+  const response = await api.post(`/productos/${id}/images`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  return response.data
+}

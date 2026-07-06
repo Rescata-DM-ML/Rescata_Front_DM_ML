@@ -133,8 +133,18 @@ export default function ProductDetail() {
   const fallbackImage = 'https://placehold.co/600x400/16a34a/ffffff?text=RESCATA'
   const listaFotos =
     imagenes && imagenes.length > 0
-      ? imagenes.map((img) => img.url).slice(0, 3)
-      : [fotoUrl || fallbackImage]
+      ? imagenes
+          .map((img) =>
+            img.url.includes('pub-mock.r2.dev')
+              ? `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(nombre)}`
+              : img.url
+          )
+          .slice(0, 3)
+      : [
+          fotoUrl && fotoUrl.includes('pub-mock.r2.dev')
+            ? `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(nombre)}`
+            : fotoUrl || fallbackImage,
+        ]
 
   const irSiguienteFoto = () => {
     setFotoActiva((prev) => (prev + 1) % listaFotos.length)
