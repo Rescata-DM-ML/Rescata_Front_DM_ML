@@ -14,6 +14,7 @@ import { z } from 'zod'
 import { Link, useNavigate } from 'react-router-dom'
 import GenericIconInput from '../components/ui/GenericIconInput'
 import useAuthMutation from '../features/auth/hooks/useAuthMutation'
+import { sanitizeText } from '../utils/sanitize'
 import './Register.css'
 
 const registerSchema = z
@@ -132,12 +133,30 @@ export default function Register() {
 
   const registrarComoNegocio = watch('registrarComoNegocio', false)
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (values) => {
     try {
-      if (data.registrarComoNegocio) {
+      if (values.registrarComoNegocio) {
+        const data = {
+          nombre: sanitizeText(values.nombre),
+          correo: values.correo,
+          contrasena: values.contrasena,
+          confirmacionContrasena: values.confirmacionContrasena,
+          consentimientoPrivacidad: values.consentimientoPrivacidad,
+          registrarComoNegocio: values.registrarComoNegocio,
+          nombreNegocio: values.nombreNegocio,
+          direccionNegocio: values.direccionNegocio,
+          categoriaNegocio: values.categoriaNegocio,
+        }
         await mutateBusiness(data)
         navigate('/negocio/dashboard')
       } else {
+        const data = {
+          nombre: sanitizeText(values.nombre),
+          correo: values.correo,
+          contrasena: values.contrasena,
+          confirmacionContrasena: values.confirmacionContrasena,
+          consentimientoPrivacidad: values.consentimientoPrivacidad,
+        }
         await mutate(data)
         navigate('/explore')
       }

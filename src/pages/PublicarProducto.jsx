@@ -8,6 +8,7 @@ import useProductoMutation from '../features/productos/hooks/useProductoMutation
 import Toast from '../components/shared/Toast'
 import ProductFeedCard from '../components/shared/ProductFeedCard'
 import { useAuthStore } from '../features/auth/stores/auth.store'
+import { sanitizeText } from '../utils/sanitize'
 import './PublicarProducto.css'
 
 const schema = z
@@ -195,9 +196,17 @@ export default function PublicarProducto() {
     setSelectedImages((prev) => prev.filter((_, idx) => idx !== index))
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (values) => {
     try {
       const files = selectedImages.map((img) => img.file)
+      const data = {
+        nombre: sanitizeText(values.nombre),
+        descripcion: sanitizeText(values.descripcion),
+        precioOriginal: values.precioOriginal,
+        precioOferta: values.precioOferta,
+        cantidadDisponible: values.cantidadDisponible,
+        fechaCaducidad: values.fechaCaducidad,
+      }
       await mutate(
         {
           nombre: data.nombre,
