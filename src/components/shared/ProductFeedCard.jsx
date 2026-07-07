@@ -29,26 +29,54 @@ function formatearTiempoCaducidad(fechaCaducidadStr) {
   return `Caduca en ${diffDays} días`
 }
 
-export default function ProductFeedCard({ producto }) {
-  const { nombre, precioOriginal, precioOferta, distanciaKm, fotoUrl, fechaCaducidad, negocio } =
-    producto
+export default function ProductFeedCard(props) {
+  // Support both passing single destructured props and wrapping under the 'producto' prop
+  const producto = props.producto || props
+  const {
+    id,
+    nombre,
+    descripcion,
+    precioOriginal,
+    precioOferta,
+    cantidadDisponible,
+    fechaCaducidad,
+    fotoUrl,
+    negocio,
+    distanciaKm = 0,
+  } = producto
 
   const fallbackImage = 'https://placehold.co/600x400/16a34a/ffffff?text=RESCATA'
   let imgUrl = fotoUrl || fallbackImage
-  if (imgUrl.includes('pub-mock.r2.dev')) {
+  if (imgUrl && imgUrl.includes('pub-mock.r2.dev') && nombre) {
     imgUrl = `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(nombre)}`
   }
+
   const tiempoCaducidad = formatearTiempoCaducidad(fechaCaducidad)
+
+  const formattedDate = fechaCaducidad
+    ? new Date(fechaCaducidad).toLocaleDateString(undefined, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+    : ''
+
+  const descripcionTruncada =
+    descripcion && descripcion.length > 100
+      ? descripcion.substring(0, 100) + '...'
+      : descripcion || ''
 
   return (
     <Link
-      to={`/productos/${producto.id}`}
+      to={`/productos/${id || producto.id}`}
       style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
     >
       <div className="product-feed-card">
         <div className="product-card-image-container">
           <img src={imgUrl} alt={nombre} className="product-card-image" />
-          <span className="product-card-badge-caducidad">{tiempoCaducidad}</span>
+          {tiempoCaducidad && (
+            <span className="product-card-badge-caducidad">{tiempoCaducidad}</span>
+          )}
         </div>
 
         <div className="product-card-content">
@@ -56,43 +84,59 @@ export default function ProductFeedCard({ producto }) {
             <span className="product-card-business-name">{negocio?.nombre || 'Negocio'}</span>
             {negocio?.calificacionPromedio !== undefined && (
               <span className="detail-value badge product-card-rating">
-                ★ {negocio.calificacionPromedio.toFixed(1)}
+                ★ {Number(negocio.calificacionPromedio).toFixed(1)}
               </span>
             )}
           </div>
 
-          <h3 className="product-card-title">{nombre}</h3>
+          <p className="product-card-title">{nombre}</p>
+          <p className="product-card-description">{descripcionTruncada}</p>
+
+          <div className="product-card-info-row">
+            {cantidadDisponible !== undefined && cantidadDisponible !== null && (
+              <span className="product-card-stock">Disponibles: {cantidadDisponible}</span>
+            )}
+            {formattedDate && <span className="product-card-expiry">Vence: {formattedDate}</span>}
+          </div>
 
           <div className="product-card-pricing-row">
             <div className="product-card-prices">
-              <span className="product-card-price-offer">${precioOferta.toFixed(2)}</span>
+              <span className="product-card-price-offer">
+                $
+                {precioOferta !== undefined && precioOferta !== null
+                  ? Number(precioOferta).toFixed(2)
+                  : '0.00'}
+              </span>
               <span className="product-card-price-original">
                 {precioOriginal !== undefined && precioOriginal !== null
-                  ? `$${precioOriginal.toFixed(2)}`
+                  ? `$${Number(precioOriginal).toFixed(2)}`
                   : 'N/A'}
               </span>
             </div>
 
-            <div className="product-card-distance">
-              <svg
-                viewBox="0 0 24 24"
-                width="14"
-                height="14"
-                fill="none"
-                stroke="#6b6375"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="product-card-distance-icon"
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span>{distanciaKm.toFixed(1)} km</span>
-            </div>
+            {distanciaKm !== undefined && (
+              <div className="product-card-distance">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="#6b6375"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="product-card-distance-icon"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>{Number(distanciaKm).toFixed(1)} km</span>
+              </div>
+            )}
           </div>
 
           <div
+            className="product-card-action-row"
             style={{
               marginTop: '0.75rem',
               paddingTop: '0.75rem',

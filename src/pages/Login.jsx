@@ -12,6 +12,7 @@ import { z } from 'zod'
 import { Link, useNavigate } from 'react-router-dom'
 import GenericIconInput from '../components/ui/GenericIconInput'
 import useAuthMutation from '../features/auth/hooks/useAuthMutation'
+import { sanitizeText } from '../utils/sanitize'
 import './Login.css'
 
 const loginSchema = z.object({
@@ -57,9 +58,14 @@ export default function Login() {
     return () => clearInterval(timer)
   }, [lockoutTime])
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (values) => {
     if (lockoutTime > 0) return
     setLoginError(null)
+
+    const data = {
+      correo: sanitizeText(values.correo),
+      contrasena: values.contrasena,
+    }
 
     try {
       await login(data.correo, data.contrasena)
