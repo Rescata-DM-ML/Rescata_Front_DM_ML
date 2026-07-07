@@ -57,8 +57,8 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          
-      - name: Mostrar variables descargadas 
+
+      - name: Mostrar variables descargadas
         run: cat .vercel/.env.production.local
 
       - name: Deploy to Vercel
