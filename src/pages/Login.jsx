@@ -64,7 +64,7 @@ export default function Login() {
     try {
       await login(data.correo, data.contrasena)
       setFailedAttempts(0) // Reset consecutive failed attempts on success
-      navigate('/explore')
+      navigate('/')
     } catch (err) {
       if (err.message === 'credenciales_invalidas') {
         setLoginError('Correo o contraseña incorrectos')

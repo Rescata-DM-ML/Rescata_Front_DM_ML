@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuthStore } from '../features/auth/stores/auth.store'
 import api from '../core/interceptors/axios.interceptor'
 import ProductFeedCard from '../components/shared/ProductFeedCard'
@@ -41,18 +42,27 @@ export default function NegocioDashboard() {
         boxSizing: 'border-box',
       }}
     >
-      <h2
-        className="explore-section-title"
+      <div
         style={{
-          fontSize: '1.75rem',
-          fontWeight: '800',
-          color: '#0c0a0f',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginBottom: '2rem',
-          letterSpacing: '-0.02em',
         }}
       >
-        Mi Dashboard
-      </h2>
+        <h2
+          className="explore-section-title"
+          style={{
+            fontSize: '1.75rem',
+            fontWeight: '800',
+            color: '#0c0a0f',
+            margin: 0,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Mi Dashboard
+        </h2>
+      </div>
 
       <div
         className="dashboard-welcome-card"
@@ -186,13 +196,19 @@ export default function NegocioDashboard() {
               <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0c0a0f' }}>
                 Mis Productos Publicados
               </h3>
-              <button
-                onClick={() => alert('Próximamente: Formulario de agregar oferta')}
+              <Link
+                to="/negocio/publicar"
                 className="btn-primary"
-                style={{ fontSize: '0.9rem', padding: '0.5rem 1.25rem', width: 'auto' }}
+                style={{
+                  fontSize: '0.9rem',
+                  padding: '0.5rem 1.25rem',
+                  width: 'auto',
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                }}
               >
                 + Agregar Oferta
-              </button>
+              </Link>
             </div>
 
             <div className="explore-products-grid">
@@ -245,8 +261,8 @@ export default function NegocioDashboard() {
               Sube tus excedentes de comida a la plataforma para que los consumidores cercanos
               puedan verlos y apartarlos.
             </p>
-            <button
-              onClick={() => alert('Próximamente: Formulario de agregar oferta')}
+            <Link
+              to="/negocio/publicar"
               className="btn-primary"
               style={{
                 maxWidth: '240px',
@@ -254,10 +270,13 @@ export default function NegocioDashboard() {
                 fontSize: '0.95rem',
                 padding: '0.75rem 1.5rem',
                 borderRadius: '12px',
+                textDecoration: 'none',
+                display: 'block',
+                textAlign: 'center',
               }}
             >
               + Agregar Oferta
-            </button>
+            </Link>
           </div>
         )}
       </div>

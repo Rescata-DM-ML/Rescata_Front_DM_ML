@@ -7,6 +7,9 @@ import ProductDetail from './pages/ProductDetail'
 import BusinessCatalog from './pages/BusinessCatalog'
 import AvisoPrivacidad from './pages/AvisoPrivacidad'
 import NegocioDashboard from './pages/NegocioDashboard'
+import NegocioPedidos from './pages/NegocioPedidos'
+import Reservas from './pages/Reservas'
+import PublicarProducto from './pages/PublicarProducto'
 import SidebarLayout from './components/shared/SidebarLayout'
 import AuthGuard from './core/guards/AuthGuard'
 import { useAuthStore } from './features/auth/stores/auth.store'
@@ -38,7 +41,10 @@ function App() {
             <Route path="/productos/:id" element={<ProductDetail />} />
             <Route path="/negocio/:id" element={<BusinessCatalog />} />
             <Route path="/negocio/dashboard" element={<NegocioDashboard />} />
+            <Route path="/negocio/pedidos" element={<NegocioPedidos />} />
+            <Route path="/negocio/publicar" element={<PublicarProducto />} />
             <Route path="/perfil" element={<Perfil />} />
+            <Route path="/reservas" element={<Reservas />} />
           </Route>
         </Route>
 

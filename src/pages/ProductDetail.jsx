@@ -49,6 +49,12 @@ export default function ProductDetail() {
   const [error, setError] = useState(null)
   const [fotoActiva, setFotoActiva] = useState(0)
 
+  // Modal states
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [cantidadApartar, setCantidadApartar] = useState(1)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorModal, setErrorModal] = useState(null)
+
   useEffect(() => {
     const obtenerDetalle = async () => {
       setCargando(true)
@@ -127,8 +133,18 @@ export default function ProductDetail() {
   const fallbackImage = 'https://placehold.co/600x400/16a34a/ffffff?text=RESCATA'
   const listaFotos =
     imagenes && imagenes.length > 0
-      ? imagenes.map((img) => img.url).slice(0, 3)
-      : [fotoUrl || fallbackImage]
+      ? imagenes
+          .map((img) =>
+            img.url.includes('pub-mock.r2.dev')
+              ? `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(nombre)}`
+              : img.url
+          )
+          .slice(0, 3)
+      : [
+          fotoUrl && fotoUrl.includes('pub-mock.r2.dev')
+            ? `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(nombre)}`
+            : fotoUrl || fallbackImage,
+        ]
 
   const irSiguienteFoto = () => {
     setFotoActiva((prev) => (prev + 1) % listaFotos.length)
@@ -141,9 +157,26 @@ export default function ProductDetail() {
   const esDisponible = estado === 'disponible' && cantidadDisponible > 0
 
   const handleApartarClick = () => {
-    alert(
-      '¡Próximamente!\n\nEn la siguiente rama (RF-FE-08) implementaremos la confirmación atómica del apartado, el límite de 2 horas para recolectar y el temporizador en tiempo real.'
-    )
+    setIsModalOpen(true)
+    setCantidadApartar(1)
+    setErrorModal(null)
+  }
+
+  const handleConfirmarApartado = async () => {
+    setIsSubmitting(true)
+    setErrorModal(null)
+    try {
+      await api.post('/reservas', {
+        productoId: id,
+        cantidad: cantidadApartar,
+      })
+      navigate('/reservas')
+    } catch (err) {
+      console.error(err)
+      setErrorModal(err.response?.data?.message || 'Error al procesar el apartado.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -315,6 +348,65 @@ export default function ProductDetail() {
           )}
         </section>
       </div>
+
+      {/* Modal de Confirmación de Apartado */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Confirmar Apartado</h2>
+            <p>
+              <strong>Producto:</strong> {nombre}
+            </p>
+            <p>
+              <strong>Negocio:</strong> {negocio?.nombre}
+            </p>
+            <p>
+              <strong>Dirección:</strong> {negocio?.direccion}
+            </p>
+
+            <div className="form-group">
+              <label>Cantidad a apartar:</label>
+              <input
+                type="number"
+                min="1"
+                max={cantidadDisponible}
+                value={cantidadApartar}
+                onChange={(e) => setCantidadApartar(Number(e.target.value))}
+              />
+            </div>
+
+            <p className="total-price">
+              <strong>Total a pagar:</strong> ${(precioOferta * cantidadApartar).toFixed(2)}
+            </p>
+
+            <div className="modal-warning">
+              <p>
+                Tienes 2 horas para recoger tu producto. Si no lo recoges en ese tiempo, el apartado
+                se cancela automáticamente.
+              </p>
+            </div>
+
+            {errorModal && <p className="error-text">{errorModal}</p>}
+
+            <div className="modal-actions">
+              <button
+                className="btn-secondary"
+                onClick={() => setIsModalOpen(false)}
+                disabled={isSubmitting}
+              >
+                Cancelar
+              </button>
+              <button
+                className="btn-primary"
+                onClick={handleConfirmarApartado}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Apartando...' : 'Confirmar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
