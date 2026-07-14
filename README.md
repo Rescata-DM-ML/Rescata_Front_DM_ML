@@ -10,15 +10,15 @@ La aplicación frontend sigue una arquitectura modular por características (Fea
 
 ```mermaid
 graph TD
-    subgraph Browser_App [Aplicación React en Navegador]
-        Router[Vite React Router] -->|Verifica Rol/JWT| AuthGuard[AuthGuard]
-        AuthGuard -->|Permite Acceso| Pages[Páginas / Componentes de UI]
-        Pages -->|Dispara Acciones| Hooks[Custom Hooks & Mutations - useAuthMutation]
-        Hooks -->|Usa Interceptores| API_Client[Axios Instance - api.js]
+    subgraph Browser_App ["Aplicación React en Navegador"]
+        Router["Vite React Router"] -->|Verifica Rol/JWT| AuthGuard["AuthGuard"]
+        AuthGuard -->|Permite Acceso| Pages["Páginas / Componentes de UI"]
+        Pages -->|Dispara Acciones| Hooks["Custom Hooks & Mutations (useAuthMutation)"]
+        Hooks -->|Usa Interceptores| API_Client["Axios Instance (api.js)"]
     end
 
-    subgraph External_Services [Servicios Externos]
-        API_Client -->|Peticiones HTTP con Cookies/JWT| NestJS_API[NestJS Backend API (Port 3000)]
+    subgraph External_Services ["Servicios Externos"]
+        API_Client -->|Peticiones HTTP con Cookies/JWT| NestJS_API["NestJS Backend API (Port 3000)"]
     end
 
     style Browser_App fill:#e0f7fa,stroke:#00acc1,stroke-width:2px
@@ -94,9 +94,8 @@ Cada vez que se sube un cambio a la rama principal `main`:
 1. **Validación**: Se descarga el código, se instalan dependencias limpiamente (`npm ci`), se valida el formateo y linter (`npm run lint`), y se compila el proyecto (`npm run build`).
 2. **Despliegue**: Tras pasar las validaciones, se conecta con la CLI de Vercel y despliega de manera automatizada a producción.
 
-A continuación se muestra la evidencia de la ejecución exitosa de este workflow:
+El estado en tiempo real y el historial de ejecuciones exitosas de la integración continua se pueden visualizar mediante el siguiente indicador dinámico oficial del workflow:
 
-![Ejecución Exitosa de GitHub Actions - Frontend](docs/images/github-actions-frontend.png)
+[![CD - Deploy to Vercel](https://rescata-front-dm-ml.vercel.app)]
 
-> [!IMPORTANT]
-> La captura de pantalla correspondiente se encuentra guardada en la ruta local: `docs/images/github-actions-frontend.png`. Asegúrese de colocar su imagen en esa ruta para el correcto renderizado de esta documentación.
+https://github.com/Rescata-DM-ML/Rescata_Front_DM_ML/actions/workflows/deploy.yml
