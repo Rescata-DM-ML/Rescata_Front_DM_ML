@@ -148,14 +148,14 @@
 }
 
 .login-link {
-  color: #16a34a;
+  color: #15803d;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .login-link:hover {
-  color: #15803d;
+  color: #166534;
   text-decoration: underline;
 }
 
@@ -163,8 +163,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin: 0.5rem 0;
-  text-align: left;
+  margin-top: 1.25rem;
 }
 
 .register-consent-label {
@@ -176,12 +175,12 @@
 }
 
 .register-consent-checkbox {
-  width: 18px;
-  height: 18px;
-  margin: 2px 0 0 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.15rem;
   accent-color: #16a34a;
-  border-radius: 4px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .register-consent-text {
@@ -191,7 +190,7 @@
 }
 
 .privacy-link {
-  color: #16a34a;
+  color: #15803d;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
