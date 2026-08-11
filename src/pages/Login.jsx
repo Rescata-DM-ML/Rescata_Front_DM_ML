@@ -123,7 +123,7 @@ export default function Login() {
   )
 
   return (
-    <div className="login-page-container">
+    <main className="login-page-container">
       <div className="login-card">
         <div className="login-header">
           <div className="logo-container">
@@ -215,6 +215,6 @@ export default function Login() {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

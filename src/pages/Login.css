@@ -56,7 +56,7 @@
 .brand-name {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #16a34a; /* Emerald green */
+  color: #15803d; /* Emerald green high-contrast */
   letter-spacing: 1px;
 }
 
@@ -162,7 +162,7 @@
 }
 
 .register-link {
-  color: #16a34a;
+  color: #15803d;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
