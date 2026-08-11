@@ -296,7 +296,7 @@ export default function Register() {
   )
 
   return (
-    <div className="register-page-container">
+    <main className="register-page-container">
       <div className="register-card">
         <div className="register-header">
           <div className="logo-container">
@@ -688,6 +688,6 @@ export default function Register() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   )
 }
