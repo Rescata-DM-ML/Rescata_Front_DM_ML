@@ -125,7 +125,7 @@ export default function Register() {
     setError,
     trigger,
     watch,
-    formState: { errors, isValid, dirtyFields, touchedFields },
+    formState: { errors, dirtyFields, touchedFields },
   } = useForm({
     resolver: zodResolver(registerSchema),
     mode: 'onBlur',
@@ -134,6 +134,7 @@ export default function Register() {
   const registrarComoNegocio = watch('registrarComoNegocio', false)
 
   const onSubmit = async (values) => {
+    console.log('REGISTER_ON_SUBMIT_VALUES:', values)
     try {
       if (values.registrarComoNegocio) {
         const data = {
@@ -161,6 +162,7 @@ export default function Register() {
         navigate('/explore')
       }
     } catch (err) {
+      console.error('REGISTER_CATCH_ERROR:', err)
       if (err.message === 'correo_duplicado') {
         // Regresar al paso 1 por si se modificó el correo
         setStep(1)
@@ -479,11 +481,7 @@ export default function Register() {
                   Siguiente paso
                 </button>
               ) : (
-                <button
-                  type="submit"
-                  className="register-submit-btn"
-                  disabled={!isValid || isLoading}
-                >
+                <button type="submit" className="register-submit-btn" disabled={isLoading}>
                   {isLoading ? (
                     <span className="spinner-container">
                       <svg
@@ -654,7 +652,7 @@ export default function Register() {
                 <button
                   type="submit"
                   className="register-submit-btn step2-submit-btn"
-                  disabled={!isValid || isLoading}
+                  disabled={isLoading}
                 >
                   {isLoading ? (
                     <span className="spinner-container">

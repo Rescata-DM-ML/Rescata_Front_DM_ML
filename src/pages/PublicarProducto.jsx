@@ -115,7 +115,7 @@ export default function PublicarProducto() {
     formState: { errors, isValid, dirtyFields, touchedFields },
   } = useForm({
     resolver: zodResolver(schema),
-    mode: 'onBlur',
+    mode: 'all',
   })
 
   const watchedValues = watch()
