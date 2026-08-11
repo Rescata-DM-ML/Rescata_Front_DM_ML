@@ -8,10 +8,11 @@ export default defineConfig({
     headers: {
       'Content-Security-Policy': [
         "default-src 'self'",
-        "script-src 'self' 'sha256-Z2/iFzh9VMlVkEOar1f/oSHWwQk3ve1qk/C2WdsC4Xk='",
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' data: blob: https://*.r2.dev",
-        "font-src 'self'",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+        "font-src 'self' data: https://fonts.gstatic.com",
+        "img-src 'self' data: blob: https://*.r2.dev https://placehold.co",
+        "connect-src 'self' http://localhost:3000 http://localhost:* ws://localhost:* https://rescata-backend.fly.dev https://*",
         "object-src 'none'",
         "base-uri 'self'",
         "form-action 'self'",

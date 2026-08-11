@@ -35,7 +35,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, dirtyFields, touchedFields },
+    formState: { errors, dirtyFields, touchedFields },
   } = useForm({
     resolver: zodResolver(loginSchema),
     mode: 'onBlur',
@@ -182,7 +182,7 @@ export default function Login() {
           <button
             type="submit"
             className="login-submit-btn"
-            disabled={!isValid || isLoading || lockoutTime > 0}
+            disabled={isLoading || lockoutTime > 0}
           >
             {lockoutTime > 0 ? (
               `Intenta de nuevo en ${lockoutTime}s`
