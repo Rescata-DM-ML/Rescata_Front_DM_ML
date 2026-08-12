@@ -74,6 +74,22 @@ export default function ProductDetail() {
     obtenerDetalle()
   }, [id])
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        if (isModalOpen) {
+          setIsModalOpen(false)
+        } else {
+          navigate(-1)
+        }
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isModalOpen, navigate])
+
   if (cargando) {
     return (
       <div className="product-detail-container loading-container">
