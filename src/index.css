@@ -99,3 +99,15 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Accesibilidad y Navegación por Teclado: Foco Visible */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #16a34a !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.3) !important;
+}
