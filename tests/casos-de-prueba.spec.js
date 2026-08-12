@@ -254,4 +254,56 @@ test.describe('Pruebas Automatizadas E2E - Rescata (Caja Negra)', () => {
       await expect(publishBtn).toBeDisabled()
     })
   })
+
+  test.describe('Caso 4: Usabilidad y Accesibilidad', () => {
+    test('4.1 Navegabilidad mediante Teclado y Foco Visible (Caso PU-03)', async ({ page }) => {
+      const email = `a11y_user_${Date.now()}@test.com`
+      await page.goto('/register')
+
+      await fillInput(page, '#nombre', 'Test Accessibility')
+      await fillInput(page, '#correo', email)
+      await fillInput(page, '#contrasena', 'Password123!')
+      await fillInput(page, '#confirmacionContrasena', 'Password123!')
+      await checkCheckbox(page, '#consentimientoPrivacidad')
+
+      const submitBtn = page.locator('button.register-submit-btn')
+      await submitBtn.click()
+
+      await expect(page).toHaveURL(/\/explore/, { timeout: 15000 })
+      await page.waitForTimeout(2000)
+
+      const bannerAceptar = page.locator('button:has-text("Permitir ubicación")')
+      if ((await bannerAceptar.count()) > 0) {
+        await bannerAceptar.first().click()
+      }
+
+      await page.keyboard.press('Tab')
+
+      const firstProductLink = page.locator('.explore-products-grid a').first()
+      if ((await firstProductLink.count()) > 0) {
+        await firstProductLink.focus()
+        await expect(firstProductLink).toBeFocused()
+
+        await page.keyboard.press('Enter')
+        await expect(page).toHaveURL(/\/productos\//, { timeout: 10000 })
+
+        await page.keyboard.press('Escape')
+        await expect(page).toHaveURL(/\/explore/, { timeout: 10000 })
+
+        await firstProductLink.first().click()
+        await expect(page).toHaveURL(/\/productos\//, { timeout: 10000 })
+
+        const apartarBtn = page.locator('button.btn-apartar')
+        if ((await apartarBtn.count()) > 0 && (await apartarBtn.isEnabled())) {
+          await apartarBtn.click()
+
+          const modal = page.locator('.modal-overlay')
+          await expect(modal).toBeVisible()
+
+          await page.keyboard.press('Escape')
+          await expect(modal).not.toBeVisible()
+        }
+      }
+    })
+  })
 })
